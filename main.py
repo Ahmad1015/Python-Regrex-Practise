@@ -56,7 +56,6 @@ python_regrex_on_emails(filelines, "Sender")
 
 def first_part_of_email():
     first_part = [re.findall(r'(.*?)\@', email) for email in python_regrex_emails]
-
     first_part = list(chain(*first_part))
     for name in first_part:
         print(name)
@@ -86,7 +85,13 @@ def email_date(filetemp):
 
 def email_subject(filetemp):
     subjects = re.findall(r'(?<=\nSubject: ).*?(?=\n\S)', filetemp, re.DOTALL)
-    print("Subject: " + subjects[0])
+    '''print("Subject: " + subjects[0])'''
+    if isinstance(subjects, list):
+        if subjects:
+            print("Subject: " + subjects[0])
+    elif isinstance(subjects, str):
+        print("Subject: " + subjects)
+
 
 
 def body_email(filetemp, exit_string):
@@ -96,8 +101,7 @@ def body_email(filetemp, exit_string):
             print(line)
         if line.startswith("Status:"):
             flag = True
-        if line.startswith(exit_string):
-            break
+
 
 
 # Task 6 Sorting
